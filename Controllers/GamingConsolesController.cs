@@ -11,7 +11,12 @@ namespace ClientServ.Controllers
     [ApiController]
     public class GamingConsolesController : ControllerBase
     {
-        private static IStorage<GamingСonsoles> _Console = new MemCache();
+        private IStorage<GamingСonsoles> _Console;
+
+        public GamingConsolesController(IStorage<GamingСonsoles> MemCache)
+        {
+            _Console = MemCache;
+        }
 
         [HttpGet]
         public ActionResult<IEnumerable<GamingСonsoles>> Get()
