@@ -5,7 +5,7 @@ namespace ClientServe.Storage
     public class MemCache : IStorage<GamingСonsoles>
     {
         private object _sync = new object();
-        private List<GamingСonsoles> _memCache = new List<GamingСonsoles>();
+        private List<GamingСonsoles> _Console = new List<GamingСonsoles>();
         public GamingСonsoles this[Guid id]
         {
             get
@@ -14,7 +14,7 @@ namespace ClientServe.Storage
                 {
                     if (!Has(id)) throw new IncorrectLabDataException($"No GamingСonsoles with id {id}");
 
-                    return _memCache.Single(x => x.Id == id);
+                    return _Console.Single(x => x.Id == id);
                 }
             }
             set
@@ -29,12 +29,12 @@ namespace ClientServe.Storage
                     }
 
                     value.Id = id;
-                    _memCache.Add(value);
+                    _Console.Add(value);
                 }
             }
         }
 
-        public System.Collections.Generic.List<GamingСonsoles> All => _memCache.Select(x => x).ToList();
+        public System.Collections.Generic.List<GamingСonsoles> All => _Console.Select(x => x).ToList();
 
         public void Add(GamingСonsoles value)
         {
@@ -46,14 +46,14 @@ namespace ClientServe.Storage
 
         public bool Has(Guid id)
         {
-            return _memCache.Any(x => x.Id == id);
+            return _Console.Any(x => x.Id == id);
         }
 
         public void RemoveAt(Guid id)
         {
             lock (_sync)
             {
-                _memCache.RemoveAll(x => x.Id == id);
+                _Console.RemoveAll(x => x.Id == id);
             }
         }
     }
